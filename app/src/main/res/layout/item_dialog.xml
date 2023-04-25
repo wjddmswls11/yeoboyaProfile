@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/cnly_dialog"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/indicator_unselected"
+    android:background="@drawable/dialot_gray_line"
     >
 
 
@@ -17,6 +18,7 @@
         app:layout_constraintWidth_percent=".4"
         android:gravity="center_horizontal"
         android:textColor="#202020"
+        android:textStyle="bold"
         android:layout_marginTop="11dp"
         android:layout_marginBottom="12dp"
         android:layout_marginLeft="33dp"
@@ -26,13 +28,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/tv_report_dialog"/>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/gray_e_1"
+        app:layout_constraintStart_toStartOf="@+id/cnly_dialog"
+        app:layout_constraintEnd_toEndOf="@+id/cnly_dialog"
+        app:layout_constraintTop_toBottomOf="@+id/tv_block_dialog"
+        app:layout_constraintBottom_toTopOf="@+id/tv_report_dialog"/>
+
 
     <TextView
         android:id="@+id/tv_report_dialog"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Report"
         android:textSize="15dp"
+        android:textStyle="bold"
         android:textColor="#202020"
         app:layout_constraintWidth_percent=".4"
         android:gravity="center_horizontal"
@@ -44,14 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_block_dialog"/>
-
-
-
-
-
-
-
-
 
 
 

@@ -13,41 +13,57 @@ import com.example.yeoboyaprofile.databinding.ItemRecvidolBinding
 class AboutAdapter(private var itemList: List<ItemData>) : RecyclerView.Adapter<AboutAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemRecvidolBinding) : RecyclerView.ViewHolder(binding.root) {
-        val imgSecond: ImageView = binding.imgSecondName
-        val imgLock : ImageView = binding.imgLock
+   /*     val imgSecond: ImageView = binding.imgSecondName
         val view_firstName : ConstraintLayout = binding.viewFirstName
-        val tv_firstName_item : TextView = binding.tvFirstNameItem
-        val tv_secondName_item : TextView = binding.tvSecondNameItem
+*/
+        fun bind(item: ItemData) = with(binding) {
+            //이미지 길이 랜덤 설정
+            val imgLength = (300..430).random()
 
-        fun bind(item: ItemData) {
+            val layoutParams = binding.imgFirstName.layoutParams
+            layoutParams.width = imgLength
+            imgFirstName.layoutParams = layoutParams
+
+            val layoutParams2 = binding.imgSecondName.layoutParams
+            layoutParams2.width = imgLength
+            imgSecondName.layoutParams = layoutParams2
+
+
             Glide.with(itemView).apply {
                 load(item.img_firstName).into(binding.imgFirstName)
-                load(item.img_secondName).into(imgSecond)
+                load(item.img_secondName).into(binding.imgSecondName)
             }
-            binding.tvFirstName.text = item.tv_firstName
 
-            imgLock.setOnClickListener {
-                if (view_firstName.visibility == View.VISIBLE) {
-                    view_firstName.visibility = View.GONE
-                    imgLock.visibility = View.INVISIBLE
-                } else {
-                    view_firstName.visibility = View.VISIBLE
-                    imgLock.visibility = View.INVISIBLE
+            binding.apply {
+                tvFirstName.text = item.tv_firstName
+
+                imgLock.setOnClickListener {
+                    if (binding.viewFirstName.visibility == View.VISIBLE) {
+                        binding.viewFirstName.visibility = View.GONE
+                        imgLock.visibility = View.INVISIBLE
+                    } else {
+                        binding.viewFirstName.visibility = View.VISIBLE
+                        imgLock.visibility = View.INVISIBLE
+                    }
                 }
-            }
 
-            view_firstName.setOnClickListener{
-                view_firstName.visibility = View.GONE
-                binding.imgFirstName.visibility = View.GONE
-                binding.imgSecondName.visibility = View.GONE
-                binding.tvFirstNameItem.visibility = View.VISIBLE
-                binding.tvFirstNameItem.text = item.tv_firstName_item
+                viewFirstName.setOnClickListener{
+                    binding.apply {
+                        viewFirstName.visibility = View.GONE
+                        imgFirstName.visibility = View.GONE
+                        imgSecondName.visibility = View.GONE
+                        tvFirstNameItem.visibility = View.VISIBLE
+                        tvFirstNameItem.text = item.tv_firstName_item
+                    }
 
-                if (adapterPosition >= itemList.size - 3) {
-                    binding.tvSecondNameItem.visibility = View.VISIBLE
-                    binding.tvSecondNameItem.text = item.tv_secondName_item
-                } else {
-                    binding.tvSecondNameItem.visibility = View.GONE
+                    if (adapterPosition >= itemList.size - 3) {
+                        binding.tvSecondNameItem.apply {
+                            visibility = View.VISIBLE
+                            text = item.tv_secondName_item
+                        }
+                    } else {
+                        binding.tvSecondNameItem.visibility = View.GONE
+                    }
                 }
             }
 
@@ -63,8 +79,12 @@ class AboutAdapter(private var itemList: List<ItemData>) : RecyclerView.Adapter<
         holder.bind(itemList[position])
 
         if (position >= itemList.size -3) {
-            holder.binding.imgSecondName.visibility = View.VISIBLE
-            holder.binding.imgSecondName.setImageResource(itemList[position].img_secondName)
+            holder.binding.imgSecondName.apply {
+                visibility = View.VISIBLE
+                setImageResource(itemList[position].img_secondName)
+            }
+
+
         } else {
             holder.binding.imgSecondName.visibility = View.GONE
         }

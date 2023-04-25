@@ -28,6 +28,6 @@ class MyViewPagerAdapter(private val items: ArrayList<String>) :
     }
 
     override fun getItemCount(): Int {
-        return Int.MAX_VALUE
+        return items.size
     }
 }

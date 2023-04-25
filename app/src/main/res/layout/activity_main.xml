@@ -55,6 +55,8 @@
                 />
 
 
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -367,41 +369,45 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/ScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintVertical_bias="1.0">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.viewpager2.widget.ViewPager2
+                <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager"
-                android:layout_width="409dp"
+                android:layout_width="match_parent"
                 android:layout_height="359dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/indicatorRecyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="292dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_goneMarginTop="292dp" />
-
-
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:tabMode="scrollable"
+                    android:background="@android:color/transparent"
+                    android:scrollbars="none"
+                    app:tabGravity="center"
+                    app:tabPaddingStart="8dp"
+                    app:tabPaddingEnd="8dp"
+                    app:tabMinWidth="0dp"
+                    android:layout_marginBottom="48dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/viewpager"
+                    />
 
             <androidx.cardview.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -409,14 +415,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginRight="12dp"
+                android:layout_marginTop="8dp"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/indicatorRecyclerView"
-                card_view:layout_constraintBottom_toTopOf="@+id/cv_second"
-                >
+                card_view:layout_constraintTop_toBottomOf="@+id/tabLayout"
+                card_view:layout_constraintBottom_toTopOf="@+id/cv_second">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -443,9 +448,9 @@
                             android:textColor="@color/nickname_m"
                             android:textSize="18dp"
                             android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <View
                             android:id="@+id/view_personbar"
@@ -454,9 +459,9 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="6dp"
                             android:background="@color/gray_d_4"
+                            app:layout_constraintBottom_toBottomOf="@+id/tv_personName"
                             app:layout_constraintStart_toEndOf="@+id/tv_personName"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintTop_toTopOf="@+id/tv_personName" />
 
                         <TextView
                             android:id="@+id/tv_PersonAge"
@@ -465,9 +470,10 @@
                             android:layout_marginLeft="6dp"
                             android:layout_marginRight="8dp"
                             android:text="22"
+                            android:textSize="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/view_personbar"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/tv_Marriage"
@@ -475,9 +481,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:src="@drawable/l"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/tv_PersonAge"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -562,9 +568,9 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginRight="26dp"
                                 android:layout_marginBottom="8dp"
+                                android:text="Like"
                                 android:textColor="#505050"
                                 android:textSize="14dp"
-                                android:text="Like"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/icon_like"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -601,12 +607,12 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginRight="5dp"
                                 android:layout_marginBottom="8dp"
+                                android:text="Video Chat"
                                 android:textColor="#505050"
                                 android:textSize="14dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@+id/icon_vchat"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:text="Video Chat" />
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -640,11 +646,11 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginRight="5dp"
                                 android:layout_marginBottom="8dp"
+                                android:text="Contact"
                                 android:textColor="#505050"
                                 android:textSize="14dp"
                                 app:layout_constraintStart_toEndOf="@+id/icon_contact"
-                                app:layout_constraintTop_toTopOf="parent"
-                                android:text="Contact" />
+                                app:layout_constraintTop_toTopOf="parent" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -655,61 +661,7 @@
             </androidx.cardview.widget.CardView>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <androidx.cardview.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/cv_second"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -720,120 +672,89 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Cvcrl_first"
-                card_view:layout_constraintBottom_toTopOf="@+id/Cvcrl_third"
-                >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white">
+                card_view:layout_constraintBottom_toTopOf="@+id/Cvcrl_third">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/cls_About"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginRight="11dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:background="@color/white">
 
-                    <TextView
-                        android:id="@+id/tv_about_me"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cls_About"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:textColor="#202020"
-                        android:textSize="13dp"
-                        android:textStyle="bold"
-                        android:background="@drawable/half_color_background"
-                        app:layout_constraintBottom_toTopOf="@+id/tv_aboutme_bt"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:text="About me" />
-
-
-                    <TextView
-                        android:id="@+id/tv_aboutme_bt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="I work as a model in Spain and I&apos;m bored because I don&apos;t have any friends here.  love tennis, football, hockey, and all kinds of sports 😜"
-                        android:textSize="14dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginRight="11dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_about_me" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_about_me"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:background="@drawable/half_color_background"
+                            android:text="About me"
+                            android:textColor="#202020"
+                            android:textSize="13dp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_aboutme_bt"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <TextView
+                            android:id="@+id/tv_aboutme_bt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="I work as a model in Spain and I&apos;m bored because I don&apos;t have any friends here.  love tennis, football, hockey, and all kinds of sports 😜"
+                            android:textSize="14dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_about_me" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recview_idol"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="12dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="11dp"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/recview_idol"
+                        android:nestedScrollingEnabled="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cls_About"/>
+                        app:layout_constraintTop_toBottomOf="@+id/cls_About" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.cardview.widget.CardView>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <androidx.cardview.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="0dp"
+            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/Cvcrl_third"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="32dp"
                 app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_second"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/cv_second">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
                     android:layout_marginTop="12dp"
+                    android:layout_marginRight="12dp"
                     android:layout_marginBottom="16dp">
 
                     <TextView
@@ -841,142 +762,143 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Photo / Video"
-                        card_view:layout_constraintTop_toTopOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintBottom_toTopOf="@+id/csl_photo_video1"
-                        android:textSize="18dp"
                         android:textColor="#202020"
+                        android:textSize="18dp"
                         android:textStyle="bold"
-                        />
+                        card_view:layout_constraintBottom_toTopOf="@+id/csl_photo_video1"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/csl_photo_video1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/csl_photo_video1"
                         android:layout_marginTop="12dp"
-                        card_view:layout_constraintTop_toBottomOf="@+id/tv_photo_video"
                         card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent">
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/tv_photo_video">
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cd_first"
-                            card_view:layout_constraintStart_toStartOf="parent"
-                            card_view:layout_constraintTop_toTopOf="parent"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="9dp"
+                            android:background="@drawable/photo_video_rectangle"
                             app:cardCornerRadius="15dp"
-                            android:background="@drawable/photo_video_rectangle">
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent">
 
                             <ImageView
                                 android:id="@+id/img_photo_video1"
                                 android:layout_width="98dp"
                                 android:layout_height="98dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_launcher_background"/>
+                                android:src="@drawable/ic_launcher_background" />
 
                         </androidx.cardview.widget.CardView>
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cd_second"
-                            card_view:layout_constraintStart_toEndOf="@+id/cd_first"
-                            card_view:layout_constraintTop_toTopOf="parent"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:cardCornerRadius="15dp"
                             android:layout_marginLeft="9dp"
-                            android:background="@drawable/photo_video_rectangle">
+                            android:background="@drawable/photo_video_rectangle"
+                            app:cardCornerRadius="15dp"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toEndOf="@+id/cd_first"
+                            card_view:layout_constraintTop_toTopOf="parent">
 
                             <ImageView
                                 android:id="@+id/img_photo_video2"
                                 android:layout_width="98dp"
                                 android:layout_height="98dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_launcher_background"/>
+                                android:src="@drawable/ic_launcher_background" />
 
                         </androidx.cardview.widget.CardView>
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cd_third"
-                            card_view:layout_constraintStart_toEndOf="@+id/cd_second"
-                            card_view:layout_constraintTop_toTopOf="parent"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="9dp"
-                            app:cardCornerRadius="15dp"
                             android:layout_marginRight="9dp"
-                            android:background="@drawable/photo_video_rectangle">
+                            android:background="@drawable/photo_video_rectangle"
+                            app:cardCornerRadius="15dp"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toEndOf="@+id/cd_second"
+                            card_view:layout_constraintTop_toTopOf="parent">
 
                             <ImageView
                                 android:id="@+id/img_photo_video3"
                                 android:layout_width="98dp"
                                 android:layout_height="98dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/ic_launcher_background"/>
+                                android:src="@drawable/ic_launcher_background" />
 
                         </androidx.cardview.widget.CardView>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/csl_photo_video2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/csl_photo_video2"
-                        card_view:layout_constraintTop_toBottomOf="@+id/csl_photo_video1"
-                        card_view:layout_constraintStart_toStartOf="parent">
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintTop_toBottomOf="@+id/csl_photo_video1">
 
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cd_fourth"
-                            card_view:layout_constraintStart_toStartOf="parent"
-                            card_view:layout_constraintTop_toTopOf="parent"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:cardCornerRadius="15dp"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/photo_video_rectangle">
+                            android:background="@drawable/photo_video_rectangle"
+                            app:cardCornerRadius="15dp"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent">
 
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
                                 <ImageView
                                     android:id="@+id/img_photo_video4"
                                     android:layout_width="98dp"
                                     android:layout_height="98dp"
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/ic_launcher_background"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
                                     card_view:layout_constraintBottom_toBottomOf="parent"
-                                    />
+                                    card_view:layout_constraintEnd_toEndOf="parent"
+                                    card_view:layout_constraintStart_toStartOf="parent"
+                                    card_view:layout_constraintTop_toTopOf="parent" />
 
                                 <ImageView
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:src="@drawable/icon_play"
                                     android:layout_margin="31dp"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
+                                    android:src="@drawable/icon_play"
                                     card_view:layout_constraintBottom_toBottomOf="parent"
-                                    />
+                                    card_view:layout_constraintEnd_toEndOf="parent"
+                                    card_view:layout_constraintStart_toStartOf="parent"
+                                    card_view:layout_constraintTop_toTopOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cd_fifth"
-                            card_view:layout_constraintStart_toEndOf="@+id/cd_fourth"
-                            card_view:layout_constraintTop_toTopOf="parent"
                             android:layout_width="0dp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
                             android:layout_marginLeft="9dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/photo_video_rectangle"
                             app:cardCornerRadius="15dp"
-                            android:background="@drawable/photo_video_rectangle">
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toEndOf="@+id/cd_fourth"
+                            card_view:layout_constraintTop_toTopOf="parent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
@@ -988,22 +910,20 @@
                                     android:layout_height="98dp"
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/ic_launcher_background"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
                                     card_view:layout_constraintBottom_toBottomOf="parent"
-                                    />
+                                    card_view:layout_constraintEnd_toEndOf="parent"
+                                    card_view:layout_constraintStart_toStartOf="parent"
+                                    card_view:layout_constraintTop_toTopOf="parent" />
 
                                 <ImageView
                                     android:layout_width="36dp"
                                     android:layout_height="36dp"
-                                    android:src="@drawable/icon_play"
                                     android:layout_margin="31dp"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
+                                    android:src="@drawable/icon_play"
                                     card_view:layout_constraintBottom_toBottomOf="parent"
-                                    />
+                                    card_view:layout_constraintEnd_toEndOf="parent"
+                                    card_view:layout_constraintStart_toStartOf="parent"
+                                    card_view:layout_constraintTop_toTopOf="parent" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -1016,8 +936,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 
     <ImageView
         android:visibility="gone"
