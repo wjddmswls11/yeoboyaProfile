@@ -27,8 +27,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var viewpager: ViewPager2
-
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,99 +64,98 @@ class MainActivity : AppCompatActivity() {
             ItemData("Exercise",imageList.random(),imageList.random(),"Soccer, Karate, Running,","Tennis, Fencing")
         )
 
-        binding.recviewIdol.adapter = AboutAdapter(itemList)
-        binding.recviewIdol.layoutManager = LinearLayoutManager(this)
-        //뷰 요소 참조
-        viewpager = binding.viewpager
-
-        //어댑터 설정
-        viewpager.apply {
-            adapter = MyViewPagerAdapter(array)
-            orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            setCurrentItem(Int.MAX_VALUE / 2 - (Int.MAX_VALUE / 2) % array.size, false)
-            //뷰페이저 페이지 변경 리스너 추가
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            })
-        }
 
 
-        val tabLayout = binding.tabLayout
-        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
-            val imageView = ImageView(this)
-            imageView.setImageResource(if (position == 3) R.drawable.indicator_selected else R.drawable.indicator_unselected)
-            tab.customView = imageView
-        }.attach()
+            with(binding) {
 
-        viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                // 선택된 탭의 이미지 변경
-                val selectedTab = tabLayout.getTabAt(position)
-                val selectedImageView = selectedTab?.customView as? ImageView
-                selectedImageView?.setImageResource(R.drawable.indicator_selected)
 
-                // 선택되지 않은 탭의 이미지 변경
-                for (i in 0 until tabLayout.tabCount) {
-                    if (i != position) {
-                        val unselectedTab = tabLayout.getTabAt(i)
-                        val unselectedImageView = unselectedTab?.customView as? ImageView
-                        unselectedImageView?.setImageResource(R.drawable.indicator_unselected)
+                recviewIdol.adapter = AboutAdapter(itemList)
+                recviewIdol.layoutManager = LinearLayoutManager(this@MainActivity)
+
+                //어댑터 설정
+                viewPager.adapter = MyViewPagerAdapter(array)
+                viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+                //뷰페이저 페이지 변경 리스너 추가
+                viewPager.registerOnPageChangeCallback(object :
+                    ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        val realPosition = position % array.size
+                        supportActionBar?.title = "Image ${realPosition + 1} of ${array.size}"
                     }
-                }
-            }
-        })
+                })
 
+
+                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                    val imageView = ImageView(this@MainActivity)
+                    imageView.setImageResource(if (position == 4) R.drawable.indicator_selected else R.drawable.indicator_unselected)
+                    tab.customView = imageView
+                }.attach()
+
+                viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        // 선택된 탭의 이미지 변경
+                        val selectedTab = tabLayout.getTabAt(position)
+                        val selectedImageView = selectedTab?.customView as? ImageView
+                        selectedImageView?.setImageResource(R.drawable.indicator_selected)
+
+                        // 선택되지 않은 탭의 이미지 변경
+                        for (i in 0 until tabLayout.tabCount) {
+                            if (i != position) {
+                                val unselectedTab = tabLayout.getTabAt(i)
+                                val unselectedImageView = unselectedTab?.customView as? ImageView
+                                unselectedImageView?.setImageResource(R.drawable.indicator_unselected)
+                            }
+                        }
+                    }
+                })
+                binding.tvAboutMe.background =
+                    ContextCompat.getDrawable(this@MainActivity, R.drawable.half_color_background)
+
+
+            }
 
 
 
 
         //스크롤뷰 참조
-
-        val scrollView = binding.ScrollView
-        val cvSecond = binding.cvSecond
-        val positionVisibility = binding.positionVisivility
-        val constraint_scrolltop = binding.constraintScrolltop
         val animationDuration = 300L //애니메이션 시간 설정
-        val imgflButton = binding.imgflButton
-        val cvcrlFirst = binding.CvcrlFirst
 
-
-        scrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
-            if (cvSecond.y <= scrollY) {
-               positionVisibility.apply {
-                   visibility = View.VISIBLE
-                   animate().translationY(0f).alpha(1f).setDuration(animationDuration).start()
-               }
-                constraint_scrolltop.visibility = View.GONE
-            } else {
-                positionVisibility.animate().translationY(-positionVisibility.height.toFloat()).alpha(0f).setDuration(animationDuration).withEndAction {
-                    positionVisibility.visibility = View.GONE
-                }.start()
-                constraint_scrolltop.visibility = View.VISIBLE
-            }
-
-            if (cvcrlFirst.y <= scrollY) {
-                imgflButton.apply {
-                    visibility = View.VISIBLE
-                    animate().alpha(1f).setDuration(animationDuration).start()
-
+        with(binding) {
+            ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                if (cvSecond.y <= scrollY) {
+                    positionVisivility.apply {
+                        visibility = View.VISIBLE
+                        animate().translationY(0f).alpha(1f).setDuration(animationDuration).start()
+                    }
+                    constraintScrolltop.visibility = View.GONE
+                } else {
+                    positionVisivility.animate().translationY(-positionVisivility.height.toFloat()).alpha(0f).setDuration(animationDuration).withEndAction {
+                        positionVisivility.visibility = View.GONE
+                    }.start()
+                        constraintScrolltop.visibility = View.VISIBLE
                 }
 
-            } else {
-                imgflButton.animate().alpha(0f).setDuration(animationDuration).withEndAction {
-                    imgflButton.visibility = View.GONE
-                }.start()
+                if (CvcrlFirst.y <= scrollY) {
+                    imgflButton.apply {
+                        visibility = View.VISIBLE
+                        animate().alpha(1f).setDuration(animationDuration).start()
+
+                    }
+
+                } else {
+                    imgflButton.animate().alpha(0f).setDuration(animationDuration).withEndAction {
+                        imgflButton.visibility = View.GONE
+                    }.start()
+                }
+
             }
 
+            // 누르면 상단으로
+            imgflButton.setOnClickListener {
+                ScrollView.smoothScrollTo(0,0)
+            }
         }
-
-
-        // 누르면 상단으로
-
-        imgflButton.setOnClickListener {
-            scrollView.smoothScrollTo(0,0)
-        }
-
-
 
 
         // 팝업 생성 및 표시 함수
@@ -166,7 +163,7 @@ class MainActivity : AppCompatActivity() {
             val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val dialogView = inflater.inflate(R.layout.item_dialog, null)
 
-            val tv_block_dialog = dialogView.findViewById<TextView>(R.id.tv_block_dialog)
+            val tvBlockDialog = dialogView.findViewById<TextView>(R.id.tv_block_dialog)
             val tv_report_dialog = dialogView.findViewById<TextView>(R.id.tv_report_dialog)
 
             val popupWindow = PopupWindow(dialogView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -177,7 +174,7 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            tv_block_dialog.setOnClickListener {
+            tvBlockDialog.setOnClickListener {
                 popupWindow.dismiss()
 
                 //AlertDialog 보여주기
@@ -224,46 +221,43 @@ class MainActivity : AppCompatActivity() {
             popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, x, y)
         }
 
-        // 다이어로그
-        val view2 = binding.view2
-        view2.setOnClickListener {
-            createAndShowPopup(view2, { locX -> locX - view2.width * 2 }, { locY -> locY + view2.height })
+
+        with(binding){
+            // 다이어로그
+            view2.setOnClickListener {
+                createAndShowPopup(view2, { locX -> locX - view2.width * 2 }, { locY -> locY + view2.height })
+            }
+
+            imgBtnDetailMore.setOnClickListener {
+                createAndShowPopup(imgBtnDetailMore, { locX -> locX - imgBtnDetailMore.width * 2}, { locY -> locY + imgBtnDetailMore.height - 35})
+            }
+
+
+
+            // 첫 번째 이미지 URL 로드 및 설정
+            Glide.with(binding.root.context)
+                .load(array[0])
+                .transform(CircleCrop())
+                .into(imgCustomProfile)
+
+
+
+
+            Glide.with(binding.root.context).apply {
+                load("https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/1V4H/image/WViUdVA3-dyWp8R4NXwCKy-sDiY.jpg")
+                    .into(imgPhotoVideo1)
+
+                load("https://m.upinews.kr/data/upi/image/20190415/p1065586576823565_363_thum.JPG")
+                    .into(imgPhotoVideo2)
+
+                load("https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2019/04/PS19041500236.jpg")
+                    .into(imgPhotoVideo3)
+                load("https://img.mbn.co.kr/filewww/news/other/2013/04/04/402405422050.jpg")
+                    .into(imgPhotoVideo4)
+                load("https://t1.daumcdn.net/cfile/tistory/2105B84A582D81331B")
+                    .into(imgPhotoVideo5)
+            }
         }
-
-        val imgBtnDetailMore = binding.imgBtnDetailMore
-        imgBtnDetailMore.setOnClickListener {
-            createAndShowPopup(imgBtnDetailMore, { locX -> locX - imgBtnDetailMore.width * 2}, { locY -> locY + imgBtnDetailMore.height - 35})
-        }
-
-
-        // 이미지뷰 참조
-        val imageView = findViewById<ImageView>(R.id.img_custom_profile)
-
-        // 첫 번째 이미지 URL 로드 및 설정
-        Glide.with(this)
-            .load(array[0])
-            .transform(CircleCrop())
-            .into(imageView)
-
-
-
-
-
-        Glide.with(this).apply {
-            load("https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/1V4H/image/WViUdVA3-dyWp8R4NXwCKy-sDiY.jpg")
-                .into(binding.imgPhotoVideo1)
-
-            load("https://m.upinews.kr/data/upi/image/20190415/p1065586576823565_363_thum.JPG")
-                .into(binding.imgPhotoVideo2)
-
-            load("https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2019/04/PS19041500236.jpg")
-                .into(binding.imgPhotoVideo3)
-            load("https://img.mbn.co.kr/filewww/news/other/2013/04/04/402405422050.jpg")
-                .into(binding.imgPhotoVideo4)
-            load("https://t1.daumcdn.net/cfile/tistory/2105B84A582D81331B")
-                .into(binding.imgPhotoVideo5)
-        }
-
     }
 
     // 뷰 페이저에 들어갈 아이템
@@ -273,6 +267,4 @@ class MainActivity : AppCompatActivity() {
         "https://cdn.huffingtonpost.kr/news/photo/201904/82131_156077.jpeg",
         "https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2013/04/PS13040400099.jpg"
     )
-
-
 }

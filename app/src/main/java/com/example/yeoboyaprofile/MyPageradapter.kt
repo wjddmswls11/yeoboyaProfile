@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.yeoboyaprofile.R
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.yeoboyaprofile.databinding.ItemProfilePictureBinding
 
 class MyViewPagerAdapter(private val items: ArrayList<String>) :
     RecyclerView.Adapter<MyViewPagerAdapter.ViewHolder>() {
@@ -21,9 +22,8 @@ class MyViewPagerAdapter(private val items: ArrayList<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val realPosition = position % items.size
         Glide.with(holder.imageView.context)
-            .load(items[realPosition])
+            .load(items[position])
             .into(holder.imageView)
     }
 
