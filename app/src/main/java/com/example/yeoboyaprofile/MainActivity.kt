@@ -115,6 +115,15 @@ class MainActivity : AppCompatActivity() {
         //스크롤뷰 참조
         val animationDuration = 300L //애니메이션 시간 설정
 
+        binding.apply {
+            positionVisivility.apply {
+                alpha = 0f
+                layoutParams = (layoutParams as ConstraintLayout.LayoutParams).apply {
+                    setMargins(0, -130 * resources.displayMetrics.density.toInt(), 0, 0)
+                }
+            }
+        }
+
         with(binding) {
             val slideDownAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.dialog_slide_down)
             ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
