@@ -6,16 +6,24 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.BackgroundColorSpan
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -27,7 +35,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,104 +52,99 @@ class MainActivity : AppCompatActivity() {
         )
 
         val itemList = listOf(
-            ItemData("Firstname", imageList.random(), imageList.random(), "Mark Serra", ""),
-            ItemData("Sexual Orientation", imageList.random(), imageList.random(), "Female", ""),
-            ItemData("Ethnicity", imageList.random(), imageList.random(), "MiddleEastern", ""),
-            ItemData("Height", imageList.random(), imageList.random(), "180cm", ""),
-            ItemData("Body type", imageList.random(), imageList.random(), "Dignified", ""),
-            ItemData("Job", imageList.random(), imageList.random(), "Model", ""),
-            ItemData("Personality", imageList.random(), imageList.random(), "Easygoing", ""),
-            ItemData("Smoke", imageList.random(), imageList.random(), "Trying to quit", ""),
-            ItemData("Drink", imageList.random(), imageList.random(), "Only socially", ""),
-            ItemData("Religion", imageList.random(), imageList.random(), "Christianity", ""),
-            ItemData("Education", imageList.random(), imageList.random(), "High School Graduate", ""),
-            ItemData("Language", imageList.random(), imageList.random(), "Japanese", ""),
-            ItemData("Child", imageList.random(), imageList.random(), "None", ""),
-            ItemData("Parenting Plan", imageList.random(), imageList.random(), "Discuss", ""),
-            ItemData("Interests",imageList.random(),imageList.random(),"Movie,Party,Small Group","Puzzle, Cook, Play, Drama"),
-            ItemData("Favorite Food",imageList.random(),imageList.random(),"Pizza, Sandwich, Hambuger,","Risotto, Wine"),
-            ItemData("Exercise",imageList.random(),imageList.random(),"Soccer, Karate, Running,","Tennis, Fencing")
+            ItemData("Firstname", imageList.random(), imageList.random(), "Mark Serra" ),
+            ItemData("Sexual Orientation", imageList.random(), imageList.random(), "Female"),
+            ItemData("Ethnicity", imageList.random(), imageList.random(), "MiddleEastern", ),
+            ItemData("Height", imageList.random(), imageList.random(), "180cm" ),
+            ItemData("Body type", imageList.random(), imageList.random(), "Dignified", ),
+            ItemData("Job", imageList.random(), imageList.random(), "Model" ),
+            ItemData("Personality", imageList.random(), imageList.random(), "Easygoing" ),
+            ItemData("Smoke", imageList.random(), imageList.random(), "Trying to quit" ),
+            ItemData("Drink", imageList.random(), imageList.random(), "Only socially" ),
+            ItemData("Religion", imageList.random(), imageList.random(), "Christianity" ),
+            ItemData("Education", imageList.random(), imageList.random(), "High School Graduate" ),
+            ItemData("Language", imageList.random(), imageList.random(), "Japanese" ),
+            ItemData("Child", imageList.random(), imageList.random(), "None" ),
+            ItemData("Parenting Plan", imageList.random(), imageList.random(), "Discuss"),
+            ItemData("Interests",imageList.random(),imageList.random(),"Movie,Party,Small Group, Puzzle, Cook, Play, Drama"),
+            ItemData("Favorite Food",imageList.random(),imageList.random(),"Pizza, Sandwich, Hambuger, Risotto, Wine"),
+            ItemData("Exercise",imageList.random(),imageList.random(),"Soccer, Karate, Running, Tennis, Fencing")
         )
 
 
 
-            with(binding) {
+        with(binding) {
+            recviewIdol.adapter = AboutAdapter(itemList)
+            recviewIdol.layoutManager = LinearLayoutManager(this@MainActivity)
+
+            //어댑터 설정
+            viewPager.adapter = MyViewPagerAdapter(array)
+            viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+            // CircleIndicator3를 설정하고 ViewPager2와 연결합니다.
+            circleIndicator.setViewPager(viewPager)
+            circleIndicator.createIndicators(array.size, 0)
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    val actualPosition = position % array.size
+                    supportActionBar?.title = "Image ${(actualPosition + 1)} of ${array.size}"
+                    circleIndicator.animatePageSelected(actualPosition)
+                }
+            })
+
+            // 무한 스크롤을 위해 초기 페이지를 중간으로 설정
+            val pageCount = 10000
+            val initialPosition = (pageCount / 2) - ((pageCount / 2) % array.size)
+            viewPager.setCurrentItem(initialPosition, false)
 
 
-                recviewIdol.adapter = AboutAdapter(itemList)
-                recviewIdol.layoutManager = LinearLayoutManager(this@MainActivity)
-
-                //어댑터 설정
-                viewPager.adapter = MyViewPagerAdapter(array)
-                viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-                //뷰페이저 페이지 변경 리스너 추가
-                viewPager.registerOnPageChangeCallback(object :
-                    ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        val realPosition = position % array.size
-                        supportActionBar?.title = "Image ${realPosition + 1} of ${array.size}"
-                    }
-                })
+        }
 
 
-                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                    val imageView = ImageView(this@MainActivity)
-                    imageView.setImageResource(if (position == 4) R.drawable.indicator_selected else R.drawable.indicator_unselected)
-                    tab.customView = imageView
-                }.attach()
-
-                viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        // 선택된 탭의 이미지 변경
-                        val selectedTab = tabLayout.getTabAt(position)
-                        val selectedImageView = selectedTab?.customView as? ImageView
-                        selectedImageView?.setImageResource(R.drawable.indicator_selected)
-
-                        // 선택되지 않은 탭의 이미지 변경
-                        for (i in 0 until tabLayout.tabCount) {
-                            if (i != position) {
-                                val unselectedTab = tabLayout.getTabAt(i)
-                                val unselectedImageView = unselectedTab?.customView as? ImageView
-                                unselectedImageView?.setImageResource(R.drawable.indicator_unselected)
-                            }
-                        }
-                    }
-                })
-                binding.tvAboutMe.background =
-                    ContextCompat.getDrawable(this@MainActivity, R.drawable.half_color_background)
-
-
-            }
-
-
-
+        //Spannable
+        val ddd = SpannableString(binding.tvAboutMe.text)
+        val backColor = ContextCompat.getColor(this,R.color.primary_200)
+        ddd.setSpan(
+            CustomBackground(backColor),
+            0,
+            ddd.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tvAboutMe.text = ddd
 
         //스크롤뷰 참조
         val animationDuration = 300L //애니메이션 시간 설정
 
         with(binding) {
+            val slideDownAnimation = AnimationUtils.loadAnimation(this@MainActivity, R.anim.dialog_slide_down)
             ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+                val layoutParams = positionVisivility.layoutParams as ConstraintLayout.LayoutParams
+
                 if (cvSecond.y <= scrollY) {
-                    positionVisivility.apply {
-                        visibility = View.VISIBLE
-                        animate().translationY(0f).alpha(1f).setDuration(animationDuration).start()
+                    if (positionVisivility.alpha != 1f) {
+                        layoutParams.setMargins(0, 0, 0, 0)
+                        positionVisivility.layoutParams = layoutParams
+                        positionVisivility.apply {
+                            startAnimation(slideDownAnimation)
+                            alpha = 1f
+                        }
                     }
-                    constraintScrolltop.visibility = View.GONE
                 } else {
-                    positionVisivility.animate().translationY(-positionVisivility.height.toFloat()).alpha(0f).setDuration(animationDuration).withEndAction {
-                        positionVisivility.visibility = View.GONE
-                    }.start()
-                        constraintScrolltop.visibility = View.VISIBLE
+                    if (positionVisivility.alpha != 0f) {
+                        layoutParams.setMargins(0, -130 * resources.displayMetrics.density.toInt(), 0, 0)
+                        positionVisivility.layoutParams = layoutParams
+                        positionVisivility.apply {
+                            clearAnimation()
+                            alpha = 0f
+                        }
+                    }
                 }
 
                 if (CvcrlFirst.y <= scrollY) {
                     imgflButton.apply {
                         visibility = View.VISIBLE
                         animate().alpha(1f).setDuration(animationDuration).start()
-
                     }
-
                 } else {
                     imgflButton.animate().alpha(0f).setDuration(animationDuration).withEndAction {
                         imgflButton.visibility = View.GONE
@@ -243,22 +245,28 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            Glide.with(binding.root.context).apply {
-                load("https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/1V4H/image/WViUdVA3-dyWp8R4NXwCKy-sDiY.jpg")
-                    .into(imgPhotoVideo1)
+           val array2 = arrayListOf(
+                "https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/1V4H/image/WViUdVA3-dyWp8R4NXwCKy-sDiY.jpg",
+                "https://m.upinews.kr/data/upi/image/20190415/p1065586576823565_363_thum.JPG",
+                "https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2019/04/PS19041500236.jpg",
+                "https://img.mbn.co.kr/filewww/news/other/2013/04/04/402405422050.jpg",
+                "https://t1.daumcdn.net/cfile/tistory/2105B84A582D81331B"
+            )
 
-                load("https://m.upinews.kr/data/upi/image/20190415/p1065586576823565_363_thum.JPG")
-                    .into(imgPhotoVideo2)
+            val photoVideoAdapter = PhotoVideoAdapter(array2)
+            recviewPhotoVideo.apply {
+                layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+                adapter = photoVideoAdapter
+            }
 
-                load("https://spnimage.edaily.co.kr/images/Photo/files/NP/S/2019/04/PS19041500236.jpg")
-                    .into(imgPhotoVideo3)
-                load("https://img.mbn.co.kr/filewww/news/other/2013/04/04/402405422050.jpg")
-                    .into(imgPhotoVideo4)
-                load("https://t1.daumcdn.net/cfile/tistory/2105B84A582D81331B")
-                    .into(imgPhotoVideo5)
+            val gridLayoutManager = GridLayoutManager(this@MainActivity, 3)
+            recviewPhotoVideo.layoutManager = gridLayoutManager
+
+
+
             }
         }
-    }
+
 
     // 뷰 페이저에 들어갈 아이템
     val array = arrayListOf(

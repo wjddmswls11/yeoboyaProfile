@@ -76,7 +76,7 @@
         android:visibility="invisible"
         android:gravity="center_vertical"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="4dp"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,22 +101,6 @@
         app:layout_constraintEnd_toStartOf="@+id/img_lock"
         />
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/tv_secondName_item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Secondname"
-        android:textSize="14dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="6dp"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/tv_firstName_item"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/img_lock"
-        />
-
     <ImageView
         android:id="@+id/img_lock"
         android:layout_width="0dp"
@@ -128,41 +112,24 @@
         app:layout_constraintStart_toEndOf="@+id/img_firstName"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="invisible"
-        android:id="@+id/view_firstName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:background="@drawable/unlock_rectangle"
-        app:layout_constraintStart_toEndOf="@+id/img_firstName"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-        <ImageView
-            android:id="@+id/img_unlock_click"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:src="@drawable/ico_unlock_505050"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_unlock_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="2dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="2dp"
+            android:padding="4dp"
+            android:background="@drawable/unlock_rectangle"
+            android:drawableStart="@drawable/ico_unlock_505050"
             android:gravity="center_vertical"
             android:text="Unlock !"
-            app:layout_constraintStart_toEndOf="@+id/img_unlock_click"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_firstName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

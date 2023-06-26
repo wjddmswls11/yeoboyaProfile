@@ -8,6 +8,7 @@
     android:background="#f5f5f5"
     tools:context=".MainActivity">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +29,7 @@
             >
 
 
-            <ImageView
+        <ImageView
                 android:id="@+id/view1"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
@@ -392,13 +393,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="0dp"
+                <me.relex.circleindicator.CircleIndicator3
+                    android:id="@+id/circleIndicator"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:scrollbars="none"
-                    app:tabGravity="center"
+                    app:ci_drawable="@drawable/indicator_selected"
+                    app:ci_drawable_unselected="@drawable/indicator_unselected"
+                    app:ci_gravity="center"
+
                     app:tabPaddingStart="8dp"
                     app:tabIndicatorHeight="0dp"
                     app:tabPaddingEnd="8dp"
@@ -420,7 +422,7 @@
                 app:cardCornerRadius="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/tabLayout"
+                card_view:layout_constraintTop_toBottomOf="@+id/circleIndicator"
                 card_view:layout_constraintBottom_toTopOf="@+id/cv_second">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -497,15 +499,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/csl_first">
 
-                        <ImageView
-                            android:id="@+id/img_map"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:src="@drawable/icon_location"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
                         <TextView
                             android:id="@+id/tv_nation"
                             android:layout_width="0dp"
@@ -513,18 +506,12 @@
                             android:layout_marginLeft="4dp"
                             android:text="New York, USA"
                             android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/img_map"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:drawableStart="@drawable/icon_location"
+                            android:drawableEnd="@drawable/badge_nation"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:src="@drawable/badge_nation"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/tv_nation"
-                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -735,7 +722,8 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <androidx.cardview.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/Cvcrl_third"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -765,171 +753,21 @@
                         android:textColor="#202020"
                         android:textSize="18dp"
                         android:textStyle="bold"
-                        card_view:layout_constraintBottom_toTopOf="@+id/csl_photo_video1"
+                        card_view:layout_constraintBottom_toTopOf="@+id/recviewPhotoVideo"
                         card_view:layout_constraintStart_toStartOf="parent"
                         card_view:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csl_photo_video1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/tv_photo_video">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cd_first"
-                            android:layout_width="0dp"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recviewPhotoVideo"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="12dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="9dp"
-                            android:background="@drawable/photo_video_rectangle"
-                            app:cardCornerRadius="15dp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintStart_toStartOf="parent"
-                            card_view:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:id="@+id/img_photo_video1"
-                                android:layout_width="98dp"
-                                android:layout_height="98dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_launcher_background" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cd_second"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="9dp"
-                            android:background="@drawable/photo_video_rectangle"
-                            app:cardCornerRadius="15dp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintStart_toEndOf="@+id/cd_first"
-                            card_view:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:id="@+id/img_photo_video2"
-                                android:layout_width="98dp"
-                                android:layout_height="98dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_launcher_background" />
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cd_third"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="9dp"
-                            android:layout_marginRight="9dp"
-                            android:background="@drawable/photo_video_rectangle"
-                            app:cardCornerRadius="15dp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintStart_toEndOf="@+id/cd_second"
-                            card_view:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:id="@+id/img_photo_video3"
-                                android:layout_width="98dp"
-                                android:layout_height="98dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/ic_launcher_background" />
-
-                        </androidx.cardview.widget.CardView>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csl_photo_video2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        card_view:layout_constraintStart_toStartOf="parent"
-                        card_view:layout_constraintTop_toBottomOf="@+id/csl_photo_video1">
-
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cd_fourth"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/photo_video_rectangle"
-                            app:cardCornerRadius="15dp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintStart_toStartOf="parent"
-                            card_view:layout_constraintTop_toTopOf="parent">
-
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <ImageView
-                                    android:id="@+id/img_photo_video4"
-                                    android:layout_width="98dp"
-                                    android:layout_height="98dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/ic_launcher_background"
-                                    card_view:layout_constraintBottom_toBottomOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="31dp"
-                                    android:src="@drawable/icon_play"
-                                    card_view:layout_constraintBottom_toBottomOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cd_fifth"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="9dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/photo_video_rectangle"
-                            app:cardCornerRadius="15dp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintStart_toEndOf="@+id/cd_fourth"
-                            card_view:layout_constraintTop_toTopOf="parent">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <ImageView
-                                    android:id="@+id/img_photo_video5"
-                                    android:layout_width="0dp"
-                                    android:layout_height="98dp"
-                                    android:scaleType="centerCrop"
-                                    android:src="@drawable/ic_launcher_background"
-                                    card_view:layout_constraintBottom_toBottomOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent" />
-
-                                <ImageView
-                                    android:layout_width="36dp"
-                                    android:layout_height="36dp"
-                                    android:layout_margin="31dp"
-                                    android:src="@drawable/icon_play"
-                                    card_view:layout_constraintBottom_toBottomOf="parent"
-                                    card_view:layout_constraintEnd_toEndOf="parent"
-                                    card_view:layout_constraintStart_toStartOf="parent"
-                                    card_view:layout_constraintTop_toTopOf="parent" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </androidx.cardview.widget.CardView>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="11dp"
+                            android:nestedScrollingEnabled="false"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_photo_video" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 

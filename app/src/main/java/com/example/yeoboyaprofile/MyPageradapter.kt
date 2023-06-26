@@ -22,12 +22,13 @@ class MyViewPagerAdapter(private val items: ArrayList<String>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val actualPosition = position % items.size
         Glide.with(holder.imageView.context)
-            .load(items[position])
+            .load(items[actualPosition])
             .into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return 10000
     }
 }
