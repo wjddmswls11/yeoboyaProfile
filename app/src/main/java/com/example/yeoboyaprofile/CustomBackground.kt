@@ -1,14 +1,9 @@
 package com.example.yeoboyaprofile
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.graphics.RectF
 import android.text.style.LineBackgroundSpan
-import android.text.style.LineHeightSpan
-import androidx.core.content.ContextCompat
-
 class CustomBackground(
     private val colorId: Int
 ) : LineBackgroundSpan {
